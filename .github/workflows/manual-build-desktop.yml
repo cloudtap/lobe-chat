@@ -266,7 +266,10 @@ jobs:
         run: npm run install-isolated --prefix=./apps/desktop
 
       - name: Set package version
-        run: npm run workflow:set-desktop-version ${{ needs.version.outputs.version }} ${{ inputs.channel }}
+        env:
+          VERSION: ${{ needs.version.outputs.version }}
+          CHANNEL: ${{ inputs.channel }}
+        run: npm run workflow:set-desktop-version $VERSION $CHANNEL
 
       - name: Build artifact on Linux
         run: npm run desktop:build
